@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"></th:block>
+
+<section class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow" style="width: 30rem;">
+        <p th:text="${message}"></p>
+        <div class="card-body">
+            <h3 class="card-title text-center">Авторизация</h3>
+            <form th:action="@{/login}" method="post">
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" name="username" class="form-control" required/>
+                    <label class="form-label" for="username">Никнейм</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="password" id="password" name="password" class="form-control" required/>
+                    <label class="form-label" for="password">Пароль</label>
+                </div>
+
+                <div class="pt-1 mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Войти</button>
+                </div>
+
+                <p class="text-center">Нет аккаунта? <a th:href="@{/register}" class="link-info">Зарегистрироваться</a></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

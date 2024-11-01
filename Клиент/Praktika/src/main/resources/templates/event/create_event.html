@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Список событий</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"></th:block>
+<form action="/event/search" method="get" class="container mt-4">
+    <div class="mb-3">
+        <input type="text" name="Name" class="form-control" placeholder="Поиск по названию">
+    </div>
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+<div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="item : ${events}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.getName()}"></h5>
+                        <a th:href="@{/event/{id}(id=${item.getId()})}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+    <th:block th:if="${role} != 'USER'">
+        <form action="/event/create" method="post" class="container mt-4">
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Введите название" required>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Дата</label>
+                <input type="date" id="date" name="date" class="form-control" placeholder="Введите дату" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <input type="text" id="description" name="description" class="form-control" placeholder="Введите описание" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Категория</label>
+                <select id="categoryId" name="categoryId" class="form-select" required>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">Категория</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="placeId" class="form-label">Место проведения</label>
+                <select id="placeId" name="placeId" class="form-select" required>
+                    <option th:each="place : ${places}"
+                            th:value="${place.id}"
+                            th:text="${place.name}">Место проведения</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="organizerId" class="form-label">Организатор</label>
+                <select id="organizerId" name="organizerId" class="form-select" required>
+                    <option th:each="organizer : ${organizers}"
+                            th:value="${organizer.id}"
+                            th:text="${organizer.surname + ' ' + organizer.name}">Организатор</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="sponsorsId" class="form-label">Спонсор</label>
+                <select id="sponsorsId" name="sponsorId" class="form-select" required>
+                    <option th:each="sponsor : ${sponsors}"
+                            th:value="${sponsor.id}"
+                            th:text="${sponsor.name}">Спонсор</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="censorship" class="form-label">Цензура</label>
+                <select id="censorship" name="censorship" class="form-control" required>
+                    <option>0+</option>
+                    <option>6+</option>
+                    <option>12+</option>
+                    <option>16+</option>
+                    <option>18+</option>
+                </select>
+            </div>
+            <button  type="submit" class="btn btn-primary">Создать</button>
+            <a href="/" class="btn btn-secondary">Назад к главной</a>
+        </form>
+    </th:block>
+</div>
+</body>
+</html>

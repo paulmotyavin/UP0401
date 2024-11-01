@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание места</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование мест</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/place/edit/'+${place.id}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Название</label>
+            <input type="text" id="name" name="name" th:value="${place.name}" class="form-control" placeholder="Введите название" required>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Адрес</label>
+            <input type="text" id="address" name="address" th:value="${place.address}" class="form-control" placeholder="Введите адрес" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacts" class="form-label">Контакты</label>
+            <input type="text" id="contacts" name="contacts" th:value="${place.contacts}" class="form-control" placeholder="Введите контакты" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/place/delete/'+${place.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/place/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>

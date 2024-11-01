@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание пользователя</title>
+    <th:block th:insert="base_list.html :: bootstrap"></th:block>
+</head>
+<body>
+<th:block th:insert="base_list.html :: navbar"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование пользователя</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/user/edit/'+${user.id}" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="surname">Фамилия</label>
+            <input type="text" id="surname" name="surname" class="form-control" th:value="${user.surname}" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="name">Имя</label>
+            <input type="text" id="name" name="name" class="form-control" th:value="${user.name}" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="birth_date">Дата рождения</label>
+            <input type="date" id="birth_date" name="birth_date" class="form-control" th:value="${user.birth_date}" required/>
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Никнейм</label>
+            <input type="text" id="username" name="username" class="form-control" th:value="${user.username}" readonly required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" th:value="${user.password}" readonly required>
+        </div>
+        <div class="mb-3">
+            <label for="active" class="form-label">Активен</label>
+            <select id="active" name="active" class="form-control" required>
+                <option value="true" th:selected="${user.active == true}">Да</option>
+                <option value="false" th:selected="${user.active == false}">Нет</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select id="role" name="role" class="form-control" required>
+                <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">Администратор</option>
+                <option value="USER" th:selected="${user.role == 'USER'}">Пользователь</option>
+                <option value="MODER" th:selected="${user.role == 'MODER'}">Модератор</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/user/delete/'+${user.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/user/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>

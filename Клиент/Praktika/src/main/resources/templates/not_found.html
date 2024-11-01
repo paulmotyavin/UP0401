@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - Доступ запрещен</title>
+    <th:block th:insert="base_list.html :: bootstrap"></th:block>
+</head>
+<body>
+<th:block th:insert="base_list.html :: navbar"></th:block>
+
+<div class="container mt-5">
+    <div class="alert alert-danger text-center" role="alert">
+        <h1 class="display-4">403 - Доступ запрещен</h1>
+        <p class="lead">Извините, но у вас нет прав для доступа к этой странице.</p>
+        <p>Ваша роль: <strong th:text="${role}"></strong></p>
+        <hr class="my-4">
+        <p>Вы можете вернуться на <a th:href="@{/}">главную страницу</a> или воспользоваться меню навигации выше.</p>
+    </div>
+</div>
+</body>
+</html>

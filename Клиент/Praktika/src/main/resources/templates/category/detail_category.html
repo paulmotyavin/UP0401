@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание категории</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование категории</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/category/edit/'+${category.id}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Название</label>
+            <input type="text" id="name" name="name" class="form-control" th:value="${category.name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <input type="text" id="description" name="description" class="form-control" th:value="${category.description}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/category/delete/'+${category.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/category/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>

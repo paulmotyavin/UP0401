@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание спонсора</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование спонсора</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/sponsor/edit/'+${sponsor.id}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" id="name" th:value="${sponsor.name}" name="name" class="form-control" placeholder="Введите имя" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacts" class="form-label">Контакты</label>
+            <input type="text" id="contacts" th:value="${sponsor.contacts}" name="contacts" class="form-control" placeholder="Введите описание" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/sponsor/delete/'+${sponsor.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/sponsor/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>

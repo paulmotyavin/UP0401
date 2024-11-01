@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Список пользователей</title>
+    <th:block th:insert="base_list.html :: bootstrap"></th:block>
+</head>
+<body>
+<th:block th:insert="base_list.html :: navbar"></th:block>
+<form action="/user/search" method="get" class="container mt-4">
+    <div class="mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Поиск по логину">
+    </div>
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+
+<div th:if="${error}" class="container mt-3">
+    <div class="alert alert-danger" th:text="${error}"></div>
+</div>
+
+<div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="user : ${users}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${user.getUsername()}"></h5>
+                        <p class="card-text" th:text="${user.getRole()}"></p>
+                        <a th:href="@{/user/{id}(id=${user.getId()})}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/user/create" method="post" class="container mt-4">
+        <div class="mb-3">
+            <label class="form-label" for="surname">Фамилия</label>
+            <input type="text" id="surname" name="surname" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="name">Имя</label>
+            <input type="text" id="name" name="name" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="birth_date">Дата рождения</label>
+            <input type="date" id="birth_date" name="birth_date" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Никнейм</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="active" class="form-label">Активен</label>
+            <select id="active" name="active" class="form-control" required>
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Роль</label>
+            <select id="role" name="role" class="form-control" required>
+                <option value="ADMIN">Администратор</option>
+                <option value="USER">Пользователь</option>
+                <option value="MODER">Модератор</option>
+            </select>
+        </div>
+        <button  type="submit" class="btn btn-primary">Создать</button>
+        <a href="/" class="btn btn-secondary">Назад к главной</a>
+    </form>
+</div>
+</body>
+</html>

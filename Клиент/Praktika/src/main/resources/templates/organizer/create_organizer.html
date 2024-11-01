@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Список организаторов</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"></th:block>
+<form action="/organizer/search" method="get" class="container mt-4">
+    <div class="mb-3">
+        <input type="text" name="Surname" class="form-control" placeholder="Поиск по фамилии">
+    </div>
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+<div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="item : ${organizers}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.getSurname() + ' ' + item.getName()}"></h5>
+                        <a th:href="@{/organizer/{id}(id=${item.getId()})}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form action="/organizer/create" method="post" class="container mt-4">
+        <div class="mb-3">
+            <label for="surname" class="form-label">Фамилия</label>
+            <input type="text" id="surname" name="surname" class="form-control" placeholder="Введите фамилию" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Введите имя" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacts" class="form-label">Контакты</label>
+            <input type="text" id="contacts" name="contacts" class="form-control" placeholder="Введите описание" required>
+        </div>
+        <button  type="submit" class="btn btn-primary">Создать</button>
+        <a href="/" class="btn btn-secondary">Назад к главной</a>
+    </form>
+</div>
+</body>
+</html>

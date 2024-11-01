@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Описание события</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование события</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+    <th:block th:if="${role} != 'USER'">
+        <form th:action="'/event/edit/'+${event.id}" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Введите название" th:value="${event.name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Дата</label>
+                <input type="date" id="date" name="date" class="form-control" th:value="${event.date}" placeholder="Введите дату" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <input type="text" id="description" name="description" class="form-control" th:value="${event.description}" placeholder="Введите описание" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Категория</label>
+                <select id="categoryId" name="categoryId" class="form-select" required>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:selected="${category.id == event.category.id}"
+                            th:text="${category.name}">Категория</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="placeId" class="form-label">Место проведения</label>
+                <select id="placeId" name="placeId" class="form-select" required>
+                    <option th:each="place : ${places}"
+                            th:value="${place.id}"
+                            th:selected="${event.place.id == place.id}"
+                            th:text="${place.name}">Место проведения</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="organizerId" class="form-label">Организатор</label>
+                <select id="organizerId" name="organizerId" class="form-select" required>
+                    <option th:each="organizer : ${organizers}"
+                            th:value="${organizer.id}"
+                            th:selected="${event.organizer.id == organizer.id}"
+                            th:text="${organizer.surname + ' ' + organizer.name}">Организатор</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="sponsorId" class="form-label">Спонсор</label>
+                <select id="sponsorId" name="sponsorId" class="form-select" required>
+                    <option th:each="sponsor : ${sponsors}"
+                            th:value="${sponsor.id}"
+                            th:selected="${event.sponsor.id == sponsor.id}"
+                            th:text="${sponsor.name}">Спонсор</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="censorship" class="form-label">Цензура</label>
+                <select id="censorship" name="censorship" class="form-control" required>
+                    <option th:selected="${event.censorship == '0+'}">0+</option>
+                    <option th:selected="${event.censorship == '6+'}">6+</option>
+                    <option th:selected="${event.censorship == '12+'}">12+</option>
+                    <option th:selected="${event.censorship == '16+'}">16+</option>
+                    <option th:selected="${event.censorship == '18+'}">18+</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
+        <form th:action="'/event/delete/'+${event.id}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+        <a href="/event/list" class="btn btn-secondary">Назад к списку</a>
+    </th:block>
+    <th:block th:if="${role} == 'USER'">
+        <form th:action="'/event/edit/'+${event.id}" method="post">
+            <div class="mb-3">
+                <label for="name1" class="form-label">Название</label>
+                <input type="text" id="name1" name="name" class="form-control" th:value="${event.name}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Дата</label>
+                <input type="date" id="date1" name="date" class="form-control" th:value="${event.date}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <input type="text" id="description1" name="description" class="form-control" th:value="${event.description}"  readonly>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId1" class="form-label">Категория</label>
+                <input type="text" id="categoryId1" name="place" class="form-control" th:value="${event.category.name}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="placeId1" class="form-label">Место проведения</label>
+                <input type="text" id="placeId1" name="place" class="form-control" th:value="${event.place.name}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="organizerId1" class="form-label">Организатор</label>
+                <input type="text" id="organizerId1" name="oragnizer" class="form-control" th:value="${event.organizer.surname + ' ' + event.organizer.name}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="sponsorId1" class="form-label">Спонсор</label>
+                <input type="text" id="sponsorId1" name="sponsor" class="form-control" th:value="${event.sponsor.name}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="censorship1" class="form-label">Цензура</label>
+                <input type="text" id="censorship1" name="description" class="form-control" th:value="${event.censorship}" readonly>
+            </div>
+        </form>
+        <div class="mb-3">
+            <th:block th:if="${#lists.isEmpty(registrations)}">
+                <form th:action="'/event/reg/'+${event.id}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Зарегистрироваться</button>
+                </form>
+            </th:block>
+            <th:block th:unless="${#lists.isEmpty(registrations)}">
+                <form th:action="'/event/cancel/'+${event.id}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Отменить регистрацию</button>
+                </form>
+            </th:block>
+        </div>
+        <a href="/event/list" class="btn btn-secondary">Назад к списку</a>
+    </th:block>
+
+    <hr>
+    <h3>Отзывы:</h3>
+    <div class="mb-3">
+        <ul class="list-group">
+            <th:block th:if="${#lists.isEmpty(reviews)}">
+                <li class="list-group-item">Нет отзывов для этого события</li>
+            </th:block>
+            <th:block th:each="review : ${reviews}">
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong th:text="${review.getUser().surname + ' ' + review.getUser().name}"></strong>
+                            <span class="text-muted" th:text="${review.date}"></span>
+                        </div>
+                    </div>
+                    <p class="mt-2" th:text="${review.comment}"></p>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <form th:action="'/event/review/add/'+${event.id}" method="post" class="mb-4">
+        <div class="mb-3">
+            <label for="comment" class="form-label">Ваш отзыв</label>
+            <textarea id="comment" name="comment" class="form-control" placeholder="Введите ваш отзыв" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить отзыв</button>
+    </form>
+</div>
+</body>
+</html>

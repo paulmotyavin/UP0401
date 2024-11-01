@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Список спонсоров</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"></th:block>
+<form action="/sponsor/search" method="get" class="container mt-4">
+    <div class="mb-3">
+        <input type="text" name="Name" class="form-control" placeholder="Поиск по названию">
+    </div>
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+<div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="item : ${sponsors}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.getName()}"></h5>
+                        <a th:href="@{/sponsor/{id}(id=${item.getId()})}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form action="/sponsor/create" method="post" class="container mt-4">
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Введите имя" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacts" class="form-label">Контакты</label>
+            <input type="text" id="contacts" name="contacts" class="form-control" placeholder="Введите описание" required>
+        </div>
+        <button  type="submit" class="btn btn-primary">Создать</button>
+        <a href="/" class="btn btn-secondary">Назад к главной</a>
+    </form>
+</div>
+</body>
+</html>

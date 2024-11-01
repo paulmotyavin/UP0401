@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание отзыва</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование отзыва</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/review/edit/'+${review.id}" method="post">
+        <div class="mb-3">
+            <label for="userId" class="form-label">Пользователь</label>
+            <select id="userId" name="userId" class="form-select" required>
+                <option th:each="user : ${users}"
+                        th:value="${user.id}"
+                        th:selected="${user.id == review.user.id}"
+                        th:text="${user.surname + ' ' + user.name}">Пользователь</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="comment" class="form-label">Комментарий</label>
+            <input type="text" id="comment" name="comment" class="form-control" th:value="${review.comment}" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Дата написания</label>
+            <input type="datetime-local" id="date" name="date" class="form-control" th:value="${formattedDate}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="eventId" class="form-label">Событие</label>
+            <select id="eventId" name="eventId" class="form-select" required>
+                <option th:each="event : ${events}"
+                        th:value="${event.id}"
+                        th:selected="${event.id == review.event.id}"
+                        th:text="${event.name}">Событие</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/review/delete/'+${review.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/review/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>

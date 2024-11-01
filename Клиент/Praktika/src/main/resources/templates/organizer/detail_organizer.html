@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Описание организатора</title>
+    <th:block th:insert="~{base_list.html :: bootstrap}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{base_list.html :: navbar}"/>
+<div class="container mt-4">
+    <h2>Просмотр и редактирование организатора</h2>
+
+    <div th:if="${error}" class="container mt-3">
+        <div class="alert alert-danger" th:text="${error}"></div>
+    </div>
+
+    <form th:action="'/organizer/edit/'+${organizer.id}" method="post">
+        <div class="mb-3">
+            <label for="surname" class="form-label">Фамилия</label>
+            <input type="text" id="surname" th:value="${organizer.surname}" name="surname" class="form-control" placeholder="Введите фамилию" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" id="name" th:value="${organizer.name}" name="name" class="form-control" placeholder="Введите имя" required>
+        </div>
+        <div class="mb-3">
+            <label for="contacts" class="form-label">Контакты</label>
+            <input type="text" id="contacts" th:value="${organizer.contacts}" name="contacts" class="form-control" placeholder="Введите описание" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <form th:action="'/organizer/delete/'+${organizer.id}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/organizer/list" class="btn btn-secondary">Назад к списку</a>
+</div>
+</body>
+</html>
